@@ -6,11 +6,11 @@ import honeybee.spring4.sungjukv6.model.SungJukVO;
 import java.util.List;
 
 public interface SungJukV6Service {
-       void newSungJuk();
+       boolean newSungJuk(SungJukVO sj);
        List<SungJukVO> readSungJuk();
-       void readOneSungJuk();
-       void modifySungJuk();
-       void removeSungJuk();
-        void computeSungJuk(SungJukVO sj);
+       SungJukVO readOneSungJuk(int sjno);
+       boolean modifySungJuk(SungJukVO sj);
+       boolean removeSungJuk(int sjno);
+       void computeSungJuk(SungJukVO sj);
 
 }

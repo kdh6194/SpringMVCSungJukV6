@@ -34,12 +34,20 @@ public class SungJukV5DAOImpl implements SungJukV4DAO {
 
     @Override
     public int insertSungJuk(SungJukVO sj) {
+        int cnt = -1;
         //매개 변수 정의
-        Object params = new Object[] {
-          sj.getName(),sj.getKor(),sj.getEng(),sj.getMat(),sj.getTot(),sj.getAvg(),sj.getGrd()
-        };
+        try {
+            Object[] params = new Object[]{
+                    sj.getName(), sj.getKor(), sj.getEng(), sj.getMat(), sj.getTot(), sj.getAvg(), sj.getGrd() + ""
+            };
+            cnt = jdbcTemplate.update(insertSQL, params);
+        }catch (Exception e)
         // 전에 작성했던 코드랑 기능에서 차이는 없다 코드는 줄었으나 여전히 달고 있는 것이 있다.
-        return jdbcTemplate.update(insertSQL,params);
+        {
+            System.out.println("insertSungJuk 에러 발생");
+            e.printStackTrace();
+        }
+            return cnt;
     }
 
     @Override

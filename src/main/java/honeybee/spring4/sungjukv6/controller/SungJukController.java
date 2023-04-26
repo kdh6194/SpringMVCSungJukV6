@@ -4,7 +4,6 @@ import honeybee.spring4.sungjukv6.model.SungJukVO;
 import honeybee.spring4.sungjukv6.service.SungJukV6Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,8 +35,12 @@ public class SungJukController {
     @PostMapping("/add")
     public ModelAndView addok(SungJukVO sj) {
         ModelAndView mv = new ModelAndView();
+        String view = "SungJukFail";
 
-        mv.addObject("sj",sj);
+        if (sjsrv.newSungJuk(sj)) {
+            mv.addObject("sj", sj);
+            view = "SungJukOk";
+        }
         mv.setViewName("sungjukok");
 
         return mv;

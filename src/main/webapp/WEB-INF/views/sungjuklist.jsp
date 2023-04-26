@@ -11,7 +11,7 @@
         <tr><th>이름</th><th>국어</th><th>영어</th><th>수학</th></tr>
         <%--
             for (SungJuk sj : sjs) {
-            <tr><td>sj.getName</td><td>sj.getKor</td><td>sj.getEng</td><td>sj.getMat</td></tr>
+            <tr><td>sj.getName()</td><td>sj.getKor()</td><td>sj.getEng()</td><td>sj.getMat()</td></tr>
             }
         --%>
         <c:forEach items="${sjs}" var="sj">
