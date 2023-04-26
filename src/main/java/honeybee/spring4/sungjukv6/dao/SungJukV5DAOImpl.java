@@ -10,10 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 @Repository("sjdao")
@@ -67,7 +64,7 @@ public class SungJukV5DAOImpl implements SungJukV4DAO {
     private class SungJukMapper implements RowMapper<SungJukVO> {
         @Override
         public SungJukVO mapRow(ResultSet rs, int num) throws SQLException {
-            SungJukVO sj = new SungJukVO(rs.getString(2),rs.getInt(3),
+            SungJukVO sj = new SungJukVO(0,rs.getString(2),rs.getInt(3),
                     rs.getInt(4),rs.getInt(5));
             sj.setSjno(rs.getInt(1)); // add역할을 한다.
 
@@ -77,30 +74,47 @@ public class SungJukV5DAOImpl implements SungJukV4DAO {
 
     @Override
     public SungJukVO selectOneSungJuk(int sjno) {
-        SungJukVO sj = null;
+        Object[] param = new Object[] { sjno };
+        RowMapper<SungJukVO> mapper = new SungJukOneMapper();
+        SungJukVO sjo = jdbcTemplate.queryForObject(selectOneSQL,mapper,param);
 
 
+        return sjo;
+    }
 
-        return sj;
+    private class SungJukOneMapper implements RowMapper<SungJukVO> {
+
+        public SungJukVO mapRow(ResultSet rs, int num) throws SQLException {
+            SungJukVO sj = new SungJukVO(0,rs.getString(2),rs.getInt(3)
+                    ,rs.getInt(4),rs.getInt(5),rs.getInt(6),rs.getDouble(7),rs.getString(8).charAt(0));
+            sj.setSjno(rs.getInt(1));
+            sj.setRegdate(rs.getString(9));
+            return  sj;
+        }
+
     }
 
     @Override
     public int updateSungJuk(SungJukVO sj) {
         int cnt = -1;
-
-
-
+        try {
+            Object[] param = new Object[]{sj.getName(), sj.getKor(), sj.getEng(), sj.getMat(),
+            };
+            cnt = jdbcTemplate.update(updateSQL, param);
+        }catch (Exception e){
+            logger.error("updateSungJuk 에러 발생");
+            logger.info(e.getMessage());
+        }
         return cnt;
     }
 
     @Override
     public int deleteSungJuk(int sjno) {
-        int cnt = -1;
+        Object[] param = new Object[] {sjno};
 
-
-
-        return cnt;
+        return jdbcTemplate.update(deleteSQL,param);
     }
+
 
 
 }

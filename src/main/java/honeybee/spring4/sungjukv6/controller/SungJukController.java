@@ -45,4 +45,43 @@ public class SungJukController {
 
         return mv;
     }
+
+    @GetMapping("/select")
+    public ModelAndView select(@RequestParam int sjno) {
+        ModelAndView mv = new ModelAndView();
+        String select = "sugnjukfail";
+
+        SungJukVO sj = sjsrv.readOneSungJuk(sjno);
+        if (sj != null) {
+            mv.addObject("sjv", sj);
+            select = "sungjukselect";
+        }
+        mv.setViewName(select);
+
+        return mv;
+    }
+
+    @GetMapping("/update")
+    public String update(SungJukVO sj) {
+        return "sungjukupdate";
+    }
+    @PostMapping("/update")
+    public ModelAndView updateok(SungJukVO sj){
+        ModelAndView mv = new ModelAndView();
+        String update = "sungjukfail";
+        if(sjsrv.modifySungJuk(sj)) {
+            mv.addObject("sjup", sj);
+            update = "sungjukupdate";
+        }
+        mv.setViewName(update);
+        return mv;
+    }
+
+    @GetMapping("/delete")
+    public String delete(int sjno) {
+        sjsrv.removeSungJuk(sjno);
+
+        // 클라이언트에게 /list를 서버에 요청하도록 지시
+        return "redirect:/list";
+    }
 }

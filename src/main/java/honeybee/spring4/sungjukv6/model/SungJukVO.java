@@ -13,15 +13,16 @@ public class SungJukVO {
     public SungJukVO() {
     }
 
-    public SungJukVO(String name, int kor, int eng, int mat) {
+    public SungJukVO(int sjno, String name, int kor, int eng, int mat) {
+        this.sjno = sjno;
         this.name = name;
         this.kor = kor;
         this.eng = eng;
         this.mat = mat;
     }
 
-    public SungJukVO(String name, int kor, int eng, int mat, int tot, double avg, char grd) {
-        this(name, kor, eng, mat);
+    public SungJukVO(int sjno,String name, int kor, int eng, int mat, int tot, double avg, char grd) {
+        this(sjno,name, kor, eng, mat);
         this.tot = tot;
         this.avg = avg;
         this.grd = grd;
