@@ -1,7 +1,10 @@
 package honeybee.spring4.sungjukv6.service;
 
 import honeybee.spring4.sungjukv6.dao.SungJukV4DAO;
+import honeybee.spring4.sungjukv6.dao.SungJukV5DAOImpl;
 import honeybee.spring4.sungjukv6.model.SungJukVO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +13,8 @@ import java.util.List;
 
 @Service("sjsrv")
 public class SungJukV6ServiceImpl implements SungJukV6Service {
-    private List<SungJukVO> sjs = null;
     private SungJukV4DAO sjdao = null;
-
+    private static final Logger logger = LogManager.getLogger(SungJukV5DAOImpl.class);
 
     @Autowired
     public SungJukV6ServiceImpl(SungJukV4DAO sjdao) {
@@ -43,6 +45,8 @@ public class SungJukV6ServiceImpl implements SungJukV6Service {
         boolean result = false;
 
         this.computeSungJuk(sj);
+        logger.info(sj);
+
         if (sjdao.insertSungJuk(sj) > 0) { result= true; }
 
         return result;

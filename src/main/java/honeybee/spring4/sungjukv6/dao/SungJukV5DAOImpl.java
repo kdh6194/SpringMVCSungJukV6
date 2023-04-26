@@ -1,6 +1,8 @@
 package honeybee.spring4.sungjukv6.dao;
 
 import honeybee.spring4.sungjukv6.model.SungJukVO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +18,8 @@ import java.sql.ResultSet;
 
 @Repository("sjdao")
 public class SungJukV5DAOImpl implements SungJukV4DAO {
+    // 로그를 사용하려면 밑에 logger를 작성해야한다.
+    private static final Logger logger = LogManager.getLogger(SungJukV5DAOImpl.class);
     private JdbcTemplate jdbcTemplate; // 타입 지정후 바로 지정한 아이다가 튀어나옴
 
     // jdbc.properties 에 정의한 SQL 가져오기
@@ -44,8 +48,8 @@ public class SungJukV5DAOImpl implements SungJukV4DAO {
         }catch (Exception e)
         // 전에 작성했던 코드랑 기능에서 차이는 없다 코드는 줄었으나 여전히 달고 있는 것이 있다.
         {
-            System.out.println("insertSungJuk 에러 발생");
-            e.printStackTrace();
+            logger.error("insertSungJuk 에러 발생");
+            logger.info(e.getMessage());
         }
             return cnt;
     }
