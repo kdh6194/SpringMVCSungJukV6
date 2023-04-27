@@ -99,7 +99,7 @@ public class SungJukV5DAOImpl implements SungJukV4DAO {
         int cnt = -1;
         try {
             Object[] param = new Object[]{sj.getName(), sj.getKor(), sj.getEng(), sj.getMat(),
-            };
+            sj.getSjno()};
             cnt = jdbcTemplate.update(updateSQL, param);
         }catch (Exception e){
             logger.error("updateSungJuk 에러 발생");

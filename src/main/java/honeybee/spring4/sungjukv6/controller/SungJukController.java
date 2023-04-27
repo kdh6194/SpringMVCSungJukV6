@@ -65,8 +65,8 @@ public class SungJukController {
     public String update(SungJukVO sj) {
         return "sungjukupdate";
     }
-    @PostMapping("/update")
-    public ModelAndView updateok(SungJukVO sj){
+    @PostMapping("/update/{sjno}")
+    public ModelAndView updateok(@PathVariable int sjno, SungJukVO sj){
         ModelAndView mv = new ModelAndView();
         String update = "sungjukfail";
         if(sjsrv.modifySungJuk(sj)) {
